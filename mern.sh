@@ -16,10 +16,10 @@ EOF
 echo "$updating_packages"
 
 echo "Installing  wget"
-# sudo apt install wget -y //uncomment later
+ sudo apt install wget -y
 
 # updating packages before installing the softwares
-#sudo apt update -y && sudo apt upgrade -y //uncomment later
+sudo apt update -y && sudo apt upgrade -y 
 
 #INSTALLING VSCODE
 if command -V code &>/dev/null; then
@@ -29,7 +29,7 @@ else
   echo "Downloading Visual Studio Code..."
   wget -P "$DIRECTORY" https://code.visualstudio.com/docs/?dv=linux64_deb -O "$DIRECTORY/vscode.deb"
   echo "Installing Visual Studio Code..."
-  # sudo dpkg -i "$DIRECTORY/vscode.deb" -y //uncomment later
+   sudo dpkg -i "$DIRECTORY/vscode.deb" -y 
 fi
 
 if command -V code &>/dev/null; then
@@ -46,7 +46,7 @@ if command -V git &>/dev/null; then
   git --version
 else
   echo "Installing Git..."
-  # sudo apt install git-all -y //uncomment later
+   sudo apt install git-all -y 
 fi
 
 if command -V git &>/dev/null; then
@@ -112,7 +112,7 @@ if command -V mongodb-compass &>/dev/null; then
   echo "Mongodb Compass is already Installed"
 else
   wget -P "$DIRECTORY" https://downloads.mongodb.com/compass/mongodb-compass_1.43.0_amd64.deb?_ga=2.37725479.626895300.1716344003-1779870393.1716344002 -O "$DIRECTORY/mongodb_compass.deb"
-  # sudo dpkg -i "$DIRECTORY/mongodb_compass.deb" -y //uncomment later
+  # sudo dpkg -i "$DIRECTORY/mongodb_compass.deb" -y 
 fi
 
 # Install prerequisites
