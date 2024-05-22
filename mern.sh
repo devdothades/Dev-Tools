@@ -115,4 +115,52 @@ else
   # sudo dpkg -i "$DIRECTORY/mongodb_compass.deb" -y //uncomment later
 fi
 
+# Install prerequisites
+echo "Installing prerequisites..."
+sudo apt-get install -y curl apt-transport-https
 
+# Install Spotify
+if is_installed "spotify-client"; then
+  echo "Spotify is already installed."
+else
+  echo "Installing Spotify..."
+  # Add the Spotify repository signing key
+  curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -
+  # Add the Spotify repository
+  echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+  # Update package list and install Spotify
+  sudo apt-get update -y
+  sudo apt-get install -y spotify-client
+  if [ $? -eq 0 ]; then
+    echo "Spotify installed successfully."
+  else
+    echo "Failed to install Spotify."
+    exit 1
+  fi
+fi
+
+# Install Discord
+if is_installed "discord"; then
+  echo "Discord is already installed."
+else
+  echo "Installing Discord..."
+  # Download Discord .deb package
+  wget -O ~/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+  # Install Discord
+  sudo dpkg -i ~/discord.deb
+  sudo apt-get install -f -y # Fix dependencies if needed
+  if [ $? -eq 0 ]; then
+    echo "Discord installed successfully."
+    rm ~/discord.deb # Clean up the .deb file
+  else
+    echo "Failed to install Discord."
+    exit 1
+  fi
+fi
+
+# Clean up
+echo "Cleaning up..."
+sudo apt-get autoremove -y
+sudo apt-get clean
+
+echo "Installation complete!"
